@@ -16,6 +16,7 @@ __pycache__/
 
 # logs
 logs/
+logs_home/
 quant_logs*/
 qual_logs*/
 saved_ckpt*/

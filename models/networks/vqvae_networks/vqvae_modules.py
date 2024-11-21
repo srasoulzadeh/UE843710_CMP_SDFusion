@@ -258,6 +258,8 @@ class Encoder3D(nn.Module):
     def forward(self, x):
         #assert x.shape[2] == x.shape[3] == self.resolution, "{}, {}, {}".format(x.shape[2], x.shape[3], self.resolution)
 
+        # print(x.shape)
+
         # timestep embedding
         temb = None
 

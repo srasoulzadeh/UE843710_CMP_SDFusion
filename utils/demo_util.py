@@ -87,17 +87,17 @@ class SDFusionOpt(BaseOpt):
 
     def init_model_args(
             self,
-            ckpt_path='saved_ckpt/sdfusion-snet-all.pth',
-            vq_ckpt_path='saved_ckpt/vqvae-snet-all.pth',
+            ckpt_path='saved_ckpt/df_steps-3000.pth',
+            vq_ckpt_path='saved_ckpt/vqvae_epoch-best.pth',
         ):
         self.model = 'sdfusion'
-        self.df_cfg = 'configs/sdfusion_snet.yaml'
+        self.df_cfg = 'configs/sdfusion_targetaugmented.yaml'
         self.ckpt = ckpt_path
         
         self.vq_model = 'vqvae'
-        self.vq_cfg = 'configs/vqvae_snet.yaml'
+        self.vq_cfg = 'configs/vqvae_targetaugmented.yaml'
         self.vq_ckpt = vq_ckpt_path
-        self.vq_dset = 'snet'
+        self.vq_dset = 'targetaugmented'
         self.vq_cat = 'all'
 
     def name(self):

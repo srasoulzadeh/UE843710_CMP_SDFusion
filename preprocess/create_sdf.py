@@ -16,7 +16,7 @@ import json
 CUR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dset', type=str, choices=['shapenet', 'abc', 'pix3d', 'building'], default='shapenet', help='which dataset to extract sdf')
+parser.add_argument('--dset', type=str, choices=['shapenet', 'abc', 'pix3d', 'building', 'target', 'targetaugmented'], default='target', help='which dataset to extract sdf')
 parser.add_argument('--thread_num', type=int, default='9', help='how many objs are creating at the same time')
 parser.add_argument('--reduce', type=int, default=4, help='define resolution. res=256//reduce')
 parser.add_argument('--category', type=str, default="all", help='Which single class to generate on [default: all, can '
@@ -328,6 +328,10 @@ def create_sdf_obj(sdfcommand, marching_cube_command, norm_mesh_dir, sdf_dir, ob
         model_id = os.path.basename(obj).replace('.obj', '')
     elif FLAGS.dset == 'shapenet':
         model_id = obj.split('/')[-2]
+    elif FLAGS.dset == 'target':
+        model_id = os.path.basename(obj).replace('.obj', '')
+    elif FLAGS.dset == 'targetaugmented':
+        model_id = os.path.basename(obj).replace('.obj', '')
     norm_mesh_sub_dir = os.path.join(norm_mesh_dir, model_id)
     sdf_sub_dir = os.path.join(sdf_dir, model_id)
 
@@ -633,6 +637,7 @@ def create_sdf_building(sdfcommand, marching_cube_command, LIB_command,
     resolution = int(res // reduce)
 
     model_dir = os.path.join(raw_dirs['mesh_dir'], 'OBJ_MODELS')
+    print(model_dir)
     norm_mesh_dir = os.path.join(raw_dirs["norm_mesh_dir"])
     sdf_dir = os.path.join(raw_dirs["sdf_dir"], f'resolution_{resolution}')
 
@@ -859,20 +864,15 @@ if __name__ == "__main__":
     cat = FLAGS.category
 
     # lst_dir, cats, all_cats, raw_dirs = get_sdf_file_lst.get_all_info(dset)
-
-    info_file = '../dataset_info_files/info-shapenet.json'
+    if dset == 'target':
+        info_file = '../dataset_info_files/info-target.json'
+    elif dset == 'targetaugmented':
+        info_file = '../dataset_info_files/info-targetaugmented.json'
     with open(info_file) as json_file:
         info_data = json.load(json_file)
-        lst_dir, cats, all_cats, raw_dirs = info_data["lst_dir"], info_data['cats'], info_data['all_cats'], info_data['raw_dirs_v1']
+        raw_dirs = info_data['raw_dirs_v1']
 
-    if dset == 'shapenet':
-        if cat != 'all':
-            cats = {cat: cats[cat]}
-    elif dset != 'abc':
-        if cat == 'all':
-            FLAGS.cats = all_cats
-        else:
-            FLAGS.cats = [cat]
+    
     
     isosurface_dir = './isosurface'
     sdf_cmd = f'{isosurface_dir}/computeDistanceField'
@@ -920,5 +920,13 @@ if __name__ == "__main__":
                    num_sample, bandwidth, res, expand_rate,
                    lst_dir, cats, raw_dirs,
                    iso_val, max_verts, ish5=True, normalize=True, g=0.00, reduce=reduce)
+    elif dset == 'target':
+        create_sdf_building(sdf_cmd, mcube_cmd, "source %s" % lib_cmd,
+                   num_sample, bandwidth, res, expand_rate, raw_dirs, iso_val,
+                   max_verts, ish5=True, normalize=True, g=0.00, reduce=reduce)
+    elif dset == 'targetaugmented':
+        create_sdf_building(sdf_cmd, mcube_cmd, "source %s" % lib_cmd,
+                   num_sample, bandwidth, res, expand_rate, raw_dirs, iso_val,
+                   max_verts, ish5=True, normalize=True, g=0.00, reduce=reduce)
 
     

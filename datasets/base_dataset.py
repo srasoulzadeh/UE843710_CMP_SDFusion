@@ -75,6 +75,20 @@ def CreateDataset(opt):
         train_dataset.initialize(opt, 'train', cat=opt.cat, res=opt.res)
         test_dataset.initialize(opt, 'test', cat=opt.cat, res=opt.res)
 
+    elif opt.dataset_mode == 'target':
+        from datasets.target_dataset import TargetDataset
+        train_dataset = TargetDataset()
+        test_dataset = TargetDataset()
+        train_dataset.initialize(opt, 'train', cat=opt.cat, res=opt.res)
+        test_dataset.initialize(opt, 'train', cat=opt.cat, res=opt.res)
+
+    elif opt.dataset_mode == 'targetaugmented':
+        from datasets.targetaugmented_dataset import TargetAugmentedDataset
+        train_dataset = TargetAugmentedDataset()
+        test_dataset = TargetAugmentedDataset()
+        train_dataset.initialize(opt, 'train', cat=opt.cat, res=opt.res)
+        test_dataset.initialize(opt, 'train', cat=opt.cat, res=opt.res)
+
     else:
         raise ValueError("Dataset [%s] not recognized." % opt.dataset_mode)
 

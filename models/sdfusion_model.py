@@ -101,6 +101,10 @@ class SDFusionModel(BaseModel):
             dist, elev, azim = 1.7, 20, 20
         elif opt.dataset_mode == 'buildingnet':
             dist, elev, azim = 1.0, 20, 20
+        elif opt.dataset_mode == 'target':
+            dist, elev, azim = 1.0, 20, 20
+        elif opt.dataset_mode == 'targetaugmented':
+            dist, elev, azim = 1.0, 20, 20
             
         self.renderer = init_mesh_renderer(image_size=256, dist=dist, elev=elev, azim=azim, device=self.device)
 
@@ -114,7 +118,7 @@ class SDFusionModel(BaseModel):
             self.df_module = self.df
             self.vqvae_module = self.vqvae
 
-        self.ddim_steps = 200
+        self.ddim_steps = 500
         if self.opt.debug == "1":
             # NOTE: for debugging purpose
             self.ddim_steps = 7
@@ -146,7 +150,7 @@ class SDFusionModel(BaseModel):
         # ref: ddpm.py, register_schedule
         self.register_schedule()
         logvar_init = 0.
-        self.logvar = torch.full(fill_value=logvar_init, size=(self.num_timesteps,))
+        self.logvar = torch.full(fill_value=logvar_init, size=(self.num_timesteps,)).to(self.device)
         self.scale = scale # default for uncond
 
     def register_schedule(self, given_betas=None, beta_schedule="linear", timesteps=1000,
@@ -327,8 +331,7 @@ class SDFusionModel(BaseModel):
 
     # check: ddpm.py, log_images(). line 1317~1327
     @torch.no_grad()
-    def inference(self, data, sample=True, ddim_steps=None, ddim_eta=0., quantize_denoised=True,
-                  infer_all=False, max_sample=16):
+    def inference(self, data, sample=True, ddim_steps=None, ddim_eta=0., quantize_denoised=True, infer_all=False, max_sample=16):
 
         self.df.eval()
 
@@ -367,7 +370,7 @@ class SDFusionModel(BaseModel):
         self.df.train()
 
     @torch.no_grad()
-    def uncond(self, ngen=1, ddim_steps=200, ddim_eta=0., scale=None):
+    def uncond(self, ngen=1, ddim_steps=500, ddim_eta=0., scale=None):
         ddim_sampler = DDIMSampler(self)
 
         if scale is None:

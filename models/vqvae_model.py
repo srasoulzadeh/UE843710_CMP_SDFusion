@@ -71,6 +71,10 @@ class VQVAEModel(BaseModel):
             dist, elev, azim = 1.7, 20, 20
         elif opt.dataset_mode == 'buildingnet':
             dist, elev, azim = 1.0, 20, 20
+        elif opt.dataset_mode == 'target':
+            dist, elev, azim = 1.0, 20, 20
+        elif opt.dataset_mode == 'targetaugmented':
+            dist, elev, azim = 1.0, 20, 20
         self.renderer = init_mesh_renderer(image_size=256, dist=dist, elev=elev, azim=azim, device=self.device)
 
         # for saving best ckpt

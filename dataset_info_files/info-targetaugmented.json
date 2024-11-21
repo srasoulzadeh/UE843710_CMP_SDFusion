@@ -1,0 +1,7 @@
+{
+    "raw_dirs_v1": {
+        "mesh_dir": "../data/TARGETAUGMENTED/",
+        "norm_mesh_dir": "../data/TARGETAUGMENTED/norm_mesh_dir/",
+        "sdf_dir": "../data/TARGETAUGMENTED/SDF/"
+    }
+}
