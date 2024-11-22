@@ -29,7 +29,7 @@ df_cfg='configs/sdfusion_targetaugmented.yaml'
 
 vq_model="vqvae"
 vq_cfg="configs/vqvae_targetaugmented.yaml"
-vq_ckpt="saved_ckpt/vqvae_steps-9000.pth"
+vq_ckpt="saved_ckpt/EX04/vqvae_steps-9000.pth"
 vq_dset='targetaugmented'
 vq_cat='all'
 ####################
@@ -46,7 +46,7 @@ trunc_thres=0.2
 ### display & log stuff ###
 display_freq=1000
 print_freq=25
-total_iters=9120
+total_iters=36480
 save_steps_freq=3000
 ###########################
 

@@ -87,8 +87,8 @@ class SDFusionOpt(BaseOpt):
 
     def init_model_args(
             self,
-            ckpt_path='saved_ckpt/EX02/df_steps-9000.pth',
-            vq_ckpt_path='saved_ckpt/EX02/vqvae_steps-9000.pth',
+            ckpt_path='saved_ckpt/EX04/df_steps-36000.pth',
+            vq_ckpt_path='saved_ckpt/EX04/vqvae_steps-9000.pth',
         ):
         self.model = 'sdfusion'
         self.df_cfg = 'configs/sdfusion_targetaugmented.yaml'
@@ -104,76 +104,75 @@ class SDFusionOpt(BaseOpt):
         return 'SDFusionTestOption'
 
 
-# class SDFusionText2ShapeOpt(BaseOpt):
-#     def __init__(self, gpu_ids=0, seed=None):
-#         super().__init__(gpu_ids, seed=seed)
+class SDFusionText2ShapeOpt(BaseOpt):
+    def __init__(self, gpu_ids=0, seed=None):
+        super().__init__(gpu_ids, seed=seed)
 
-#         # some other custom args here
-#         print(f'[*] {self.name()} initialized.')
+        # some other custom args here
+        print(f'[*] {self.name()} initialized.')
         
-#     def init_dset_args(self, dataroot='data', dataset_mode='text2shape', cat='all', res=64, cached_dir=None):
-#         # dataset - snet
-#         self.dataroot = dataroot
-#         self.cached_dir = cached_dir
-#         self.ratio = 1.0
-#         self.res = res
-#         self.dataset_mode = dataset_mode
-#         self.cat = cat
+    def init_dset_args(self, dataroot='data', dataset_mode='text2shape', cat='all', res=64, cached_dir=None):
+        # dataset - snet
+        self.dataroot = dataroot
+        self.cached_dir = cached_dir
+        self.ratio = 1.0
+        self.res = res
+        self.dataset_mode = dataset_mode
+        self.cat = cat
         
-#     def init_model_args(
-#             self,
-#             ckpt_path='saved_ckpt/sdfusion-txt2shape.pth',
-#             vq_ckpt_path='saved_ckpt/vqvae-snet-all.pth',
-#         ):
-#         self.model = 'sdfusion-txt2shape'
-#         self.df_cfg = 'configs/sdfusion-txt2shape.yaml'
-#         self.ckpt = ckpt_path
+    def init_model_args(
+            self,
+            ckpt_path='saved_ckpt/sdfusion-txt2shape.pth',
+            vq_ckpt_path='saved_ckpt/vqvae-snet-all.pth',
+        ):
+        self.model = 'sdfusion-txt2shape'
+        self.df_cfg = 'configs/sdfusion-txt2shape.yaml'
+        self.ckpt = ckpt_path
         
-#         self.vq_model = 'vqvae'
-#         self.vq_cfg = 'configs/vqvae_snet.yaml'
-#         self.vq_ckpt = vq_ckpt_path
-#         self.vq_dset = 'snet'
-#         self.vq_cat = 'all'
+        self.vq_model = 'vqvae'
+        self.vq_cfg = 'configs/vqvae_snet.yaml'
+        self.vq_ckpt = vq_ckpt_path
+        self.vq_dset = 'snet'
+        self.vq_cat = 'all'
 
-#     def name(self):
-#         return 'SDFusionText2ShapeOption'
+    def name(self):
+        return 'SDFusionText2ShapeOption'
 
-# class SDFusionImage2ShapeOpt(BaseOpt):
-#     def __init__(self, gpu_ids=0, seed=None):
-#         super().__init__(gpu_ids, seed=seed)
+class SDFusionImage2ShapeOpt(BaseOpt):
+    def __init__(self, gpu_ids=0, seed=None):
+        super().__init__(gpu_ids, seed=seed)
 
-#         # some other custom args here
-#         print(f'[*] {self.name()} initialized.')
+        # some other custom args here
+        print(f'[*] {self.name()} initialized.')
         
-#     def init_dset_args(self, dataroot='data', dataset_mode='pix3d_img2shape', cat='all', res=64, cached_dir=None):
-#         # dataset - snet
-#         self.dataroot = dataroot
-#         self.cached_dir = cached_dir
-#         self.ratio = 1.0
-#         self.res = res
-#         self.dataset_mode = dataset_mode
-#         self.cat = cat
+    def init_dset_args(self, dataroot='data', dataset_mode='pix3d_img2shape', cat='all', res=64, cached_dir=None):
+        # dataset - snet
+        self.dataroot = dataroot
+        self.cached_dir = cached_dir
+        self.ratio = 1.0
+        self.res = res
+        self.dataset_mode = dataset_mode
+        self.cat = cat
         
-#     def init_model_args(
-#             self,
-#             ckpt_path='saved_ckpt/sdfusion-img2shape.pth',
-#             vq_ckpt_path='saved_ckpt/vqvae-snet-all.pth',
-#         ):
-#         self.model = 'sdfusion-img2shape'
-#         self.df_cfg = 'configs/sdfusion-img2shape.yaml'
-#         self.ckpt = ckpt_path
+    def init_model_args(
+            self,
+            ckpt_path='saved_ckpt/sdfusion-img2shape.pth',
+            vq_ckpt_path='saved_ckpt/vqvae-snet-all.pth',
+        ):
+        self.model = 'sdfusion-img2shape'
+        self.df_cfg = 'configs/sdfusion-img2shape.yaml'
+        self.ckpt = ckpt_path
         
-#         self.vq_model = 'vqvae'
-#         self.vq_cfg = 'configs/vqvae_snet.yaml'
-#         self.vq_ckpt = vq_ckpt_path
-#         self.vq_dset = 'snet'
-#         self.vq_cat = 'all'
+        self.vq_model = 'vqvae'
+        self.vq_cfg = 'configs/vqvae_snet.yaml'
+        self.vq_ckpt = vq_ckpt_path
+        self.vq_dset = 'snet'
+        self.vq_cat = 'all'
 
-#     def name(self):
-#         return 'SDFusionImage2ShapeOption'
+    def name(self):
+        return 'SDFusionImage2ShapeOption'
 
-
-# class SDFusionMM2ShapeOpt(BaseOpt):
+class SDFusionMM2ShapeOpt(BaseOpt):
     def __init__(self, gpu_ids=0, seed=None):
         super().__init__(gpu_ids, seed=seed)
 
